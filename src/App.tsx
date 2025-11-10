@@ -1,18 +1,36 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import ProtectRoute from "./context/ProtectRoute";
+import OtpProtect from "./context/OtpProtect";
 import Dashboard from "./pages/Dashboard";
 import Layout from "./Layout/Layout";
+import Profile from "./pages/Profile";
+import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
+import OtpPage from "./pages/OtpPage";
 
 function App() {
-  // return <h1>Hello</h1>
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          {/* Redirect root path to employee-dashboard */}
-          <Route index element={<Navigate to="employee-dashboard" replace />} />
+        {/* Default route redirects to login */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
 
-          {/* Dashboard route */}
-          <Route path="employee-dashboard" element={<Dashboard />} />
+        {/* Login page */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/otp" element={<OtpProtect><OtpPage /></OtpProtect>} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+
+        {/* Protected pages with layout */}
+        <Route
+          path="/"
+          element={
+            <ProtectRoute>
+              <Layout />
+            </ProtectRoute>
+          }
+        >
+          <Route path="/employee-dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>
     </Router>

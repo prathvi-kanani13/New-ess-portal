@@ -35,7 +35,7 @@ export default function Sidebar() {
           <AccordionTrigger
             onClick={() => handleToggle("dashboard")}
             className="flex justify-between items-center py-2 hover:bg-gray-50 rounded-md px-2"
-          > 
+          >
             <div className="flex items-center gap-2 text-lg font-semibold">
               Dashboard
               <Badge

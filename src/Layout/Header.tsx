@@ -1,8 +1,7 @@
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Bell, MessageSquareText, SmilePlus } from "lucide-react"
-import { Avatar, AvatarFallback} from "@/components/ui/avatar"
-import Image from "../assets/avtar.jpg"
+import UserInfo from "../pages/UserInfo"
 
 export default function Header() {
     return (
@@ -47,10 +46,9 @@ export default function Header() {
                     <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </Button>
 
-                <Avatar className="w-8 h-8 border border-gray-300">
-                    <img src={Image} alt="" />
-                    <AvatarFallback>U</AvatarFallback>
-                </Avatar>
+                <div className="w-8 h-8">
+                    <UserInfo />
+                </div>
             </div>
         </header>
     )
