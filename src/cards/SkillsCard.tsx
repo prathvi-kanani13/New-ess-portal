@@ -2,7 +2,16 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { PieChart, Pie, Cell } from "recharts"
 
+
+interface Skill {
+    name: string
+    percent: number
+    color: string
+    updated: string
+}
+
 export default function SkillsCard() {
+
     const skills: Skill[] = [
         { name: "Figma", percent: 95, color: "#126195", updated: "15 May 2025" },
         { name: "HTML", percent: 85, color: "#03C95A", updated: "12 May 2025" },
@@ -74,11 +83,4 @@ export default function SkillsCard() {
             </CardContent>
         </Card>
     )
-}
-
-interface Skill {
-    name: string
-    percent: number
-    color: string
-    updated: string
 }

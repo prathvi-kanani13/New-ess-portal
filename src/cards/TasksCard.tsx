@@ -11,67 +11,69 @@ interface Task {
     completed?: boolean
 }
 
-const tasks: Task[] = [
-    {
-        id: 1,
-        name: "Patient appointment booking",
-        status: "Onhold",
-        team: [
-            "https://i.pravatar.cc/40?img=1",
-            "https://i.pravatar.cc/40?img=2",
-            "https://i.pravatar.cc/40?img=3",
-        ],
-    },
-    {
-        id: 2,
-        name: "Appointment booking with payment",
-        status: "Inprogress",
-        team: [
-            "https://i.pravatar.cc/40?img=4",
-            "https://i.pravatar.cc/40?img=5",
-            "https://i.pravatar.cc/40?img=6",
-        ],
-    },
-    {
-        id: 3,
-        name: "Patient and Doctor video conferencing",
-        status: "Completed",
-        team: [
-            "https://i.pravatar.cc/40?img=7",
-            "https://i.pravatar.cc/40?img=8",
-            "https://i.pravatar.cc/40?img=9",
-        ],
-        completed: true,
-    },
-    {
-        id: 4,
-        name: "Private chat module",
-        status: "Pending",
-        team: [
-            "https://i.pravatar.cc/40?img=10",
-            "https://i.pravatar.cc/40?img=11",
-            "https://i.pravatar.cc/40?img=12",
-        ],
-    },
-    {
-        id: 5,
-        name: "Go-Live and Post-Implementation Support",
-        status: "Inprogress",
-        team: [
-            "https://i.pravatar.cc/40?img=13",
-            "https://i.pravatar.cc/40?img=14",
-        ],
-    },
-]
-
-const statusColors: Record<Task["status"], string> = {
-    Onhold: "bg-pink-200 text-pink-600",
-    Inprogress: "bg-purple-200 text-purple-600",
-    Completed: "bg-green-200 text-green-600",
-    Pending: "bg-blue-200 text-blue-600",
-}
-
 export default function TasksCard() {
+
+    const tasks: Task[] = [
+        {
+            id: 1,
+            name: "Patient appointment booking",
+            status: "Onhold",
+            team: [
+                "https://i.pravatar.cc/40?img=1",
+                "https://i.pravatar.cc/40?img=2",
+                "https://i.pravatar.cc/40?img=3",
+            ],
+        },
+        {
+            id: 2,
+            name: "Appointment booking with payment",
+            status: "Inprogress",
+            team: [
+                "https://i.pravatar.cc/40?img=4",
+                "https://i.pravatar.cc/40?img=5",
+                "https://i.pravatar.cc/40?img=6",
+            ],
+        },
+        {
+            id: 3,
+            name: "Patient and Doctor video conferencing",
+            status: "Completed",
+            team: [
+                "https://i.pravatar.cc/40?img=7",
+                "https://i.pravatar.cc/40?img=8",
+                "https://i.pravatar.cc/40?img=9",
+            ],
+            completed: true,
+        },
+        {
+            id: 4,
+            name: "Private chat module",
+            status: "Pending",
+            team: [
+                "https://i.pravatar.cc/40?img=10",
+                "https://i.pravatar.cc/40?img=11",
+                "https://i.pravatar.cc/40?img=12",
+            ],
+        },
+        {
+            id: 5,
+            name: "Go-Live and Post-Implementation Support",
+            status: "Inprogress",
+            team: [
+                "https://i.pravatar.cc/40?img=13",
+                "https://i.pravatar.cc/40?img=14",
+            ],
+        },
+    ]
+
+
+    const statusColors: Record<Task["status"], string> = {
+        Onhold: "bg-pink-200 text-pink-600",
+        Inprogress: "bg-purple-200 text-purple-600",
+        Completed: "bg-green-200 text-green-600",
+        Pending: "bg-blue-200 text-blue-600",
+    }
+
     return (
         <Card className="h-[400px]">
             <CardHeader className="flex flex-row items-center justify-between border-b border-[#E5E7EB] px-6 py-4">

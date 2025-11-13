@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import ProtectRoute from "./context/ProtectRoute";
+// import ProtectRoute from "./context/ProtectRoute";
 import OtpProtect from "./context/OtpProtect";
 import Dashboard from "./pages/Dashboard";
 import Layout from "./Layout/Layout";
@@ -7,6 +7,8 @@ import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
 import OtpPage from "./pages/OtpPage";
+import DetailProfile from "./pages/DetailProfile";
+import LeaveApplication from "./pages/LeaveApplication";
 
 function App() {
   return (
@@ -24,12 +26,14 @@ function App() {
         <Route
           path="/"
           element={
-            <ProtectRoute>
-              <Layout />
-            </ProtectRoute>
+            // <ProtectRoute>
+            <Layout />
+            // </ProtectRoute>
           }
         >
           <Route path="/employee-dashboard" element={<Dashboard />} />
+          <Route path="/detail-profile" element={<DetailProfile />} />
+          <Route path="/leave-application" element={<LeaveApplication />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>

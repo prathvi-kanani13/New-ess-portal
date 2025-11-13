@@ -1,7 +1,8 @@
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Bell, MessageSquareText, SmilePlus } from "lucide-react"
+import { MessageSquareText, SmilePlus } from "lucide-react"
 import UserInfo from "../pages/UserInfo"
+import Notification from "../pages/Notification"
 
 export default function Header() {
     return (
@@ -37,14 +38,7 @@ export default function Header() {
                     <MessageSquareText className="w-6 h-6 text-gray-600" />
                 </Button>
 
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-md bg-[#E8E9EA] w-9 h-9 relative"
-                >
-                    <Bell className="w-6 h-6 text-gray-600" />
-                    <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-                </Button>
+                <Notification />
 
                 <div className="w-8 h-8">
                     <UserInfo />

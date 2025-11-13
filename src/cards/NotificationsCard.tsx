@@ -8,25 +8,26 @@ interface Notification {
     image: string
 }
 
-const notifications: Notification[] = [
-    {
-        message: "You have received a new message from HR.",
-        time: "2 hours ago",
-        image: Image,
-    },
-    {
-        message: "Don't forget about the team meeting tomorrow at 10 AM.",
-        time: "1 day ago",
-        image: Image,
-    },
-    {
-        message: "Your performance review is scheduled for next week.",
-        time: "3 days ago",
-        image: Image,
-    },
-]
-
 export default function NotificationsCard() {
+
+    const notifications: Notification[] = [
+        {
+            message: "You have received a new message from HR.",
+            time: "2 hours ago",
+            image: Image,
+        },
+        {
+            message: "Don't forget about the team meeting tomorrow at 10 AM.",
+            time: "1 day ago",
+            image: Image,
+        },
+        {
+            message: "Your performance review is scheduled for next week.",
+            time: "3 days ago",
+            image: Image,
+        },
+    ]
+
     return (
         <Card className="shadow-sm w-[528px] h-[475px] border border-[#E5E7EB] rounded-md">
             <CardHeader className="flex items-center justify-between px-6 py-4 border-b border-[#E5E7EB]">

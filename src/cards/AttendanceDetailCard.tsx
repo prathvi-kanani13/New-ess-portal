@@ -10,15 +10,16 @@ interface AttendanceItem {
     [key: string]: string | number
 }
 
-const attendanceData: AttendanceItem[] = [
-    { name: "On Time", value: 1000, color: "#0C4B5E", label: "On Time" },
-    { name: "Late Attendance", value: 40, color: "#FFC107", label: "Late Attendance" },
-    { name: "Work From Home", value: 500, color: "#126195", label: "Work From Home" },
-    { name: "Absent", value: 50, color: "#E70D0D", label: "Absent" },
-    { name: "Sick Leave", value: 158, color: "#03C95A", label: "Sick Leave" },
-]
-
 export default function AttendanceDetailCard() {
+
+    const attendanceData: AttendanceItem[] = [
+        { name: "On Time", value: 1000, color: "#0C4B5E", label: "On Time" },
+        { name: "Late Attendance", value: 40, color: "#FFC107", label: "Late Attendance" },
+        { name: "Work From Home", value: 500, color: "#126195", label: "Work From Home" },
+        { name: "Absent", value: 50, color: "#E70D0D", label: "Absent" },
+        { name: "Sick Leave", value: 158, color: "#03C95A", label: "Sick Leave" },
+    ]
+
     return (
         <Card className="shadow-sm w-[650px] h-[345px] border border-[#E5E7EB] rounded-md">
             <CardHeader className="flex items-center justify-between px-6 py-4 border-b border-[#E5E7EB]">

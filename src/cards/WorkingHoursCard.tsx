@@ -10,23 +10,24 @@ interface StatItem {
     value: string
 }
 
-const stats: StatItem[] = [
-    { label: "Total Working Hours", value: "12h 36m" },
-    { label: "Productive Hours", value: "08h 36m" },
-    { label: "Break Hours", value: "22m 15s" },
-    { label: "Overtime", value: "02h 15m" },
-]
-
-const timeline: TimelineSegment[] = [
-    { width: "flex-1", color: "#10B981" },
-    { width: "w-16", color: "#FACC15" },
-    { width: "flex-1", color: "#10B981" },
-    { width: "w-20", color: "#FACC15" },
-    { width: "flex-1", color: "#10B981" },
-    { width: "w-12", color: "#2563EB" },
-]
-
 export default function WorkingHoursCard() {
+
+    const stats: StatItem[] = [
+        { label: "Total Working Hours", value: "12h 36m" },
+        { label: "Productive Hours", value: "08h 36m" },
+        { label: "Break Hours", value: "22m 15s" },
+        { label: "Overtime", value: "02h 15m" },
+    ]
+
+    const timeline: TimelineSegment[] = [
+        { width: "flex-1", color: "#10B981" },
+        { width: "w-16", color: "#FACC15" },
+        { width: "flex-1", color: "#10B981" },
+        { width: "w-20", color: "#FACC15" },
+        { width: "flex-1", color: "#10B981" },
+        { width: "w-12", color: "#2563EB" },
+    ]
+
     return (
         <Card className="shadow-sm border border-[#E5E7EB] p-5 h-[185px]">
             {/* Stats Row */}

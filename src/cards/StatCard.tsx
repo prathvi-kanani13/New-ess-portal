@@ -8,38 +8,39 @@ interface StatCard {
     changeColor: string
 }
 
-const statCards: StatCard[] = [
-    {
-        color: "#126195",
-        value: "8.36 / 9",
-        label: "Total Hours Today",
-        change: "5% This Week",
-        changeColor: "#03C95A",
-    },
-    {
-        color: "#212529",
-        value: "10 / 40",
-        label: "Total Hours Week",
-        change: "7% Last Week",
-        changeColor: "#03C95A",
-    },
-    {
-        color: "#1B84FF",
-        value: "75 / 98",
-        label: "Total Hours Month",
-        change: "8% Last Month",
-        changeColor: "#E70D0D",
-    },
-    {
-        color: "#FD3995",
-        value: "16 / 28",
-        label: "Overtime this Month",
-        change: "6% Last Month",
-        changeColor: "#E70D0D",
-    },
-]
-
 export default function StatCard() {
+
+    const statCards: StatCard[] = [
+        {
+            color: "#126195",
+            value: "8.36 / 9",
+            label: "Total Hours Today",
+            change: "5% This Week",
+            changeColor: "#03C95A",
+        },
+        {
+            color: "#212529",
+            value: "10 / 40",
+            label: "Total Hours Week",
+            change: "7% Last Week",
+            changeColor: "#03C95A",
+        },
+        {
+            color: "#1B84FF",
+            value: "75 / 98",
+            label: "Total Hours Month",
+            change: "8% Last Month",
+            changeColor: "#E70D0D",
+        },
+        {
+            color: "#FD3995",
+            value: "16 / 28",
+            label: "Overtime this Month",
+            change: "6% Last Month",
+            changeColor: "#E70D0D",
+        },
+    ]
+
     return (
         <div className="grid grid-cols-4 gap-6">
             {statCards.map((item, index) => (

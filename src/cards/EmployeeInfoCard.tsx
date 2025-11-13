@@ -6,14 +6,15 @@ interface EmployeeInfo {
   value: string
 }
 
-const employeeInfo: EmployeeInfo[] = [
-  { label: "Phone Number", value: "+1 324 3453 545" },
-  { label: "Email Address", value: "Steperde124@example.com" },
-  { label: "Report Office", value: "Doglas Martini" },
-  { label: "Joined on", value: "15 Jan 2024" },
-]
-
 export default function EmployeeInfoCard() {
+
+  const employeeInfo: EmployeeInfo[] = [
+    { label: "Phone Number", value: "+1 324 3453 545" },
+    { label: "Email Address", value: "Steperde124@example.com" },
+    { label: "Report Office", value: "Doglas Martini" },
+    { label: "Joined on", value: "15 Jan 2024" },
+  ]
+
   return (
     <Card className="shadow-sm w-[510px] h-[345px] border border-[#E5E7EB] rounded-md">
       <CardHeader className="bg-[#212529] text-white rounded-t-md px-4 py-2">

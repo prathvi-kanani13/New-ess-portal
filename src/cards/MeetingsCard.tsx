@@ -7,30 +7,31 @@ interface Meetings {
     time: string
 }
 
-const meetings: Meetings[] = [
-    {
-        message: "Project ESS-Portal",
-        submessage: "Discuss project goals and timelines.",
-        time: "11:00 AM",
-    },
-    {
-        message: "Project ESS-Portal",
-        submessage: "Discuss project goals and timelines.",
-        time: "12:00 AM",
-    },
-    {
-        message: "Project ESS-Portal",
-        submessage: "Discuss project goals and timelines.",
-        time: "15:00 PM",
-    },
-    {
-        message: "Project ESS-Portal",
-        submessage: "Discuss project goals and timelines.",
-        time: "18:40 AM",
-    },
-]
-
 export default function MeetingsCard() {
+
+    const meetings: Meetings[] = [
+        {
+            message: "Project ESS-Portal",
+            submessage: "Discuss project goals and timelines.",
+            time: "11:00 AM",
+        },
+        {
+            message: "Project ESS-Portal",
+            submessage: "Discuss project goals and timelines.",
+            time: "12:00 AM",
+        },
+        {
+            message: "Project ESS-Portal",
+            submessage: "Discuss project goals and timelines.",
+            time: "15:00 PM",
+        },
+        {
+            message: "Project ESS-Portal",
+            submessage: "Discuss project goals and timelines.",
+            time: "18:40 AM",
+        },
+    ]
+
     return (
         <Card className="shadow-sm w-[528px] h-[475px] border border-[#E5E7EB] rounded-md">
             <CardHeader className="flex items-center justify-between px-6 py-4 border-b border-[#E5E7EB]">

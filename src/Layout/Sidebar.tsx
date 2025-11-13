@@ -29,7 +29,7 @@ export default function Sidebar() {
         type="multiple"
         value={openItems}
         onValueChange={setOpenItems}
-        className="px-3 mt-3 text-sm"
+        className="px-3 text-sm"
       >
         <AccordionItem value="dashboard" className="mb-3">
           <AccordionTrigger
@@ -62,7 +62,10 @@ export default function Sidebar() {
           </AccordionTrigger>
           <AccordionContent>
             <SidebarSection
-              items={[{ label: "Detail Profile", href: "/detail-profile" }]}
+              items={[
+                { label: "Detail Profile", href: "/detail-profile" },
+                { label: "Leave Application", href: "/leave-application" },
+              ]}
             />
           </AccordionContent>
         </AccordionItem>
@@ -77,15 +80,17 @@ export default function Sidebar() {
           <AccordionContent>
             <SidebarSection
               items={[
-                { label: "Leave Application", href: "/leave-application" },
                 { label: "PMS", href: "/pms" },
                 { label: "Work Logs", href: "/work-logs" },
                 { label: "Pay Slip", href: "/pay-slip" },
                 { label: "Attendance", href: "/attendance" },
                 { label: "Company Policy", href: "/company-policy" },
                 { label: "Attendance Regulation", href: "/attendance-regulation" },
-                { label: "Change Password", href: "/change-password" },
-                { label: "Request WFM", href: "/request-wfm" },
+                { label: "Request WFM/ODD", href: "/request-wfm-odd" },
+                { label: "Add Overtime", href: "/add-overtime" },
+                { label: "View Task", href: "/view-task" },
+                { label: "Add Activity", href: "/add-activity" },
+                { label: "Request Comp Off", href: "/request-comp-off" },
               ]}
             />
           </AccordionContent>

@@ -8,16 +8,17 @@ interface LeaveDetail {
   value: string | number
 }
 
-const leaveDetails: LeaveDetail[] = [
-  { label: "Total Leaves", value: 16 },
-  { label: "Taken", value: 10 },
-  { label: "Absent", value: 2 },
-  { label: "Request", value: 0 },
-  { label: "Worked Days", value: 240 },
-  { label: "Loss of Pay", value: 2 },
-]
-
 export default function LeaveDetailCard() {
+
+  const leaveDetails: LeaveDetail[] = [
+    { label: "Total Leaves", value: 16 },
+    { label: "Taken", value: 10 },
+    { label: "Absent", value: 2 },
+    { label: "Request", value: 0 },
+    { label: "Worked Days", value: 240 },
+    { label: "Loss of Pay", value: 2 },
+  ]
+
   const [open, setOpen] = useState(false)
 
   return (

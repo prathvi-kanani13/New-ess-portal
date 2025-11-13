@@ -8,16 +8,17 @@ interface TeamMember {
     image: string
 }
 
-const teamMembers: TeamMember[] = [
-    { name: "Jiya Sharma", role: "Senior Product Designer", image: Image },
-    { name: "Riya Sharma", role: "UI/UX Designer", image: Image },
-    { name: "Mina Sharma", role: "Product Designer", image: Image },
-    { name: "Kiya Sharma", role: "Project Manager", image: Image },
-    { name: "Siya Sharma", role: "Team Leader", image: Image },
-    { name: "Riya Sharma", role: "Senior Product Designer", image: Image },
-]
-
 export default function TeamMemberCard() {
+
+    const teamMembers: TeamMember[] = [
+        { name: "Jiya Sharma", role: "Senior Product Designer", image: Image },
+        { name: "Riya Sharma", role: "UI/UX Designer", image: Image },
+        { name: "Mina Sharma", role: "Product Designer", image: Image },
+        { name: "Kiya Sharma", role: "Project Manager", image: Image },
+        { name: "Siya Sharma", role: "Team Leader", image: Image },
+        { name: "Riya Sharma", role: "Senior Product Designer", image: Image },
+    ]
+
     return (
         <Card className="shadow-sm w-[528px] h-[475px] border border-[#E5E7EB] rounded-md">
             <CardHeader className="flex items-center justify-between px-6 py-4 border-b border-[#E5E7EB]">

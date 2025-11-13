@@ -15,43 +15,44 @@ interface Project {
     image: string
 }
 
-const projects: Project[] = [
-    {
-        id: 1,
-        name: "Project Name 1",
-        leader: "Jiya Sharma",
-        deadline: "14/10/2024",
-        tasksDone: 6,
-        totalTasks: 10,
-        timeSpent: "65/120 Hrs",
-        image: Image,
-        team: [
-            "https://i.pravatar.cc/40?img=10",
-            "https://i.pravatar.cc/40?img=11",
-            "https://i.pravatar.cc/40?img=12",
-            "https://i.pravatar.cc/40?img=13",
-        ],
-    },
-    {
-        id: 2,
-        name: "Project Name 2",
-        leader: "Aarav Patel",
-        deadline: "20/12/2024",
-        tasksDone: 4,
-        totalTasks: 8,
-        timeSpent: "48/100 Hrs",
-        image: Image,
-        team: [
-            "https://i.pravatar.cc/40?img=20",
-            "https://i.pravatar.cc/40?img=21",
-            "https://i.pravatar.cc/40?img=22",
-            "https://i.pravatar.cc/40?img=23",
-            "https://i.pravatar.cc/40?img=24",
-        ],
-    },
-]
-
 export default function ProjectsCard() {
+
+    const projects: Project[] = [
+        {
+            id: 1,
+            name: "Project Name 1",
+            leader: "Jiya Sharma",
+            deadline: "14/10/2024",
+            tasksDone: 6,
+            totalTasks: 10,
+            timeSpent: "65/120 Hrs",
+            image: Image,
+            team: [
+                "https://i.pravatar.cc/40?img=10",
+                "https://i.pravatar.cc/40?img=11",
+                "https://i.pravatar.cc/40?img=12",
+                "https://i.pravatar.cc/40?img=13",
+            ],
+        },
+        {
+            id: 2,
+            name: "Project Name 2",
+            leader: "Aarav Patel",
+            deadline: "20/12/2024",
+            tasksDone: 4,
+            totalTasks: 8,
+            timeSpent: "48/100 Hrs",
+            image: Image,
+            team: [
+                "https://i.pravatar.cc/40?img=20",
+                "https://i.pravatar.cc/40?img=21",
+                "https://i.pravatar.cc/40?img=22",
+                "https://i.pravatar.cc/40?img=23",
+                "https://i.pravatar.cc/40?img=24",
+            ],
+        },
+    ]
+
     return (
         <Card className="h-[400px]">
             <CardHeader className="flex items-center justify-between px-6 py-4 border-b border-[#E5E7EB]">

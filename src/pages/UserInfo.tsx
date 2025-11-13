@@ -41,7 +41,7 @@ export default function UserInfo() {
         </Avatar>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="w-[215px]" align="end">
+      <DropdownMenuContent className="w-[215px] mt-4" align="end">
         <div className="flex items-center gap-3 p-2">
           <Avatar className="w-12 h-12 border-2 border-gray-300">
             <AvatarImage src={user.image} alt={user.name} />

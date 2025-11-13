@@ -7,22 +7,23 @@ interface PerformanceData {
   value: number
 }
 
-const performanceData: PerformanceData[] = [
-  { month: "Jan", value: 20000 },
-  { month: "Feb", value: 20000 },
-  { month: "Mar", value: 30000 },
-  { month: "Apr", value: 30000 },
-  { month: "May", value: 40000 },
-  { month: "Jun", value: 40000 },
-  { month: "Jul", value: 50000 },
-  { month: "Aug", value: 50000 },
-  { month: "Sep", value: 55000 },
-  { month: "Oct", value: 55000 },
-  { month: "Nov", value: 60000 },
-  { month: "Dec", value: 60000 },
-]
-
 export default function PerformanceCard() {
+
+  const performanceData: PerformanceData[] = [
+    { month: "Jan", value: 20000 },
+    { month: "Feb", value: 20000 },
+    { month: "Mar", value: 30000 },
+    { month: "Apr", value: 30000 },
+    { month: "May", value: 40000 },
+    { month: "Jun", value: 40000 },
+    { month: "Jul", value: 50000 },
+    { month: "Aug", value: 50000 },
+    { month: "Sep", value: 55000 },
+    { month: "Oct", value: 55000 },
+    { month: "Nov", value: 60000 },
+    { month: "Dec", value: 60000 },
+  ]
+
   return (
     <Card className="shadow-sm w-[650px] h-[448px] border border-[#E5E7EB] rounded-md">
       {/* Header */}
