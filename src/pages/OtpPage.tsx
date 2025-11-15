@@ -49,17 +49,6 @@ export default function OtpPage() {
                         setErrorMessage("Something went wrong. Please try again.");
                     }
                 },
-
-                // onError: (err: any) => {
-                //   if (err.response && err.response.data) {
-                //     const data = err.response.data;
-                //     if (data.message) setErrorMessage(data.message);
-                //     else if (data.errors) setErrorMessage(data.errors.join(", "));
-                //     else setErrorMessage("Server error. Please try again later.");
-                //   } else {
-                //     setErrorMessage("Server error. Please try again later.");
-                //   }
-                // },
             }
         );
     };

@@ -4,6 +4,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Edit, Phone, Mail, User, Calendar, MapPin, IdCard, Users, CalendarDays, Building, BadgeCheck, Flag, Heart, Briefcase, Baby, MoreVertical } from "lucide-react";
 import Image from "../assets/avtar.jpg";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import BankInfoCard from "../cards/BankInfoCard";
+import FamilyInfoCard from "../cards/FamilyInfoCard";
+import EducationInfoCard from "../cards/EducationInfoCard";
 
 interface InfoItem {
     label: string;
@@ -221,26 +224,11 @@ export default function DetailProfile() {
                     </Card>
 
                     {/* Info Boxes */}
-                    <Card className="relative rounded-sm">
-                        <div>
-                            <h4 className="font-bold text-lg text-[#202C4B] px-4 py-4">Bank Information</h4>
-                            <Edit className="absolute top-4 right-4 text-[#6B7280] cursor-pointer" size={20} />
-                        </div>
-                    </Card>
+                    <BankInfoCard />
 
-                    <Card className="relative rounded-sm">
-                        <div>
-                            <h4 className="font-bold text-lg text-[#202C4B] px-4 py-4">Family Information</h4>
-                            <Edit className="absolute top-4 right-4 text-[#6B7280] cursor-pointer" size={20} />
-                        </div>
-                    </Card>
+                    <FamilyInfoCard />
 
-                    <Card className="relative rounded-sm">
-                        <div>
-                            <h4 className="font-bold text-lg text-[#202C4B] px-4 py-4">Education Details</h4>
-                            <Edit className="absolute top-4 right-4 text-[#6B7280] cursor-pointer" size={20} />
-                        </div>
-                    </Card>
+                    <EducationInfoCard />
 
                     <Card className="relative rounded-sm">
                         <div>
