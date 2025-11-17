@@ -6,29 +6,41 @@ import EditBankDialog from "../Dialogs/EditBankDialog"
 export default function BankInfoCard() {
   const [isOpen, setIsOpen] = useState(false)
   const [showDialog, setShowDialog] = useState(false)
-  const [dialogFields, setDialogFields] = useState<any[]>([])
+  const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
-  const toggleDropdown = () => setIsOpen((prev) => !prev)
+  const [bankInfo, setBankInfo] = useState([
+    [
+      { label: "Bank Name", value: "HDFC" },
+      { label: "Bank Account Number", value: "XXXX 5567" },
+      { label: "IFSC Code", value: "HDFC0001123" },
+      { label: "Branch", value: "Andheri West" },
+      { label: "Person name in bank", value: "John Doe" },
+    ]
+  ])
 
-  const fields = [
-    { label: "Bank Name", value: "HDFC Bank" },
-    { label: "Bank Account Number", value: "XXXX 5567" },
-    { label: "IFSC Code", value: "HDFC0001123" },
-    { label: "Branch", value: "Andheri West" },
-  ]
+  const toggleDropdown = () => setIsOpen(!isOpen)
 
-  const handleEditClick = (e: React.MouseEvent) => {
+  const handleEditClick = (index: number, e: React.MouseEvent) => {
     e.stopPropagation()
-    setDialogFields(fields)
+    setActiveIndex(index)
     setShowDialog(true)
   }
 
   const handleAddClick = (e: React.MouseEvent) => {
     e.stopPropagation()
-    setDialogFields(
-      fields.map(f => ({ label: f.label, value: "" }))
-    )
+    setActiveIndex(null)
     setShowDialog(true)
+  }
+
+  const handleSave = (updatedFields: any[]) => {
+    if (activeIndex !== null) {
+      const updated = [...bankInfo]
+      updated[activeIndex] = updatedFields
+      setBankInfo(updated)
+    } else {
+      setBankInfo((prev) => [...prev, updatedFields])
+    }
+    setShowDialog(false)
   }
 
   return (
@@ -46,31 +58,56 @@ export default function BankInfoCard() {
 
         {isOpen && (
           <div
-            className="absolute left-0 right-0 bg-white border-t border-gray-200 px-4 py-3 shadow-md z-10"
+            className="absolute left-0 right-0 bg-white border-t border-gray-200 px-4 shadow-md z-10"
             style={{ top: "100%" }}
           >
-            <div className="flex items-center justify-between text-sm text-gray-700">
-              {fields.map((field) => (
-                <div key={field.label}>
-                  <p className="text-gray-500">{field.label}</p>
-                  <p className="font-semibold text-[#202C4B]">{field.value}</p>
+            <div className="text-sm text-gray-700">
+              {/* Header row */}
+              <div className="flex font-semibold text-gray-500 border-b">
+                {bankInfo[0].map((field) => (
+                  <div key={field.label} className="flex-1 py-2">
+                    {field.label}
+                  </div>
+                ))}
+                <div className="w-6"></div> {/* Space for edit icon */}
+              </div>
+
+              {/* Data rows */}
+              {bankInfo.map((member, index) => (
+                <div
+                  key={index}
+                  className="flex justify-between items-center"
+                >
+                  {member.map((field) => (
+                    <div key={field.label} className="flex-1 py-2">
+                      <p className="font-semibold text-[#202C4B]">{field.value}</p>
+                    </div>
+                  ))}
+
+                  <Edit
+                    className="text-gray-500 cursor-pointer hover:text-[#126195]"
+                    size={18}
+                    onClick={(e) => handleEditClick(index, e)}
+                  />
                 </div>
               ))}
-              <Edit
-                className="text-gray-500 cursor-pointer hover:text-[#126195]"
-                size={18}
-                onClick={handleEditClick}
-              />
             </div>
           </div>
         )}
+
       </Card>
 
       <EditBankDialog
         open={showDialog}
         onOpenChange={setShowDialog}
-        fields={dialogFields}
+        fields={
+          activeIndex !== null
+            ? bankInfo[activeIndex]
+            : bankInfo[0].map(f => ({ ...f, value: "" }))
+        }
+        onSave={handleSave}
       />
     </>
   )
 }
+

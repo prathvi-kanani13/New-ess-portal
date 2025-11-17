@@ -6,30 +6,43 @@ import EditFamilyDialog from "../Dialogs/EditFamilyDialog"
 export default function FamilyInfoCard() {
   const [isOpen, setIsOpen] = useState(false)
   const [showDialog, setShowDialog] = useState(false)
-  const [dialogFields, setDialogFields] = useState<any[]>([])
+  const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
-  const toggleDropdown = () => setIsOpen((prev) => !prev)
+  const [familyMembers, setFamilyMembers] = useState([
+    [
+      { label: "Name", value: "John Doe" },
+      { label: "Date of Birth", value: "01/01/1990" },
+      { label: "Gender", value: "Male" },
+      { label: "Relation", value: "Brother" },
+      { label: "Phone", value: "123-456-7890" },
+    ],
+  ])
 
-  const handleEditClick = (e: React.MouseEvent) => {
+  const toggleDropdown = () => setIsOpen(!isOpen)
+
+  const handleEditClick = (index: number, e: React.MouseEvent) => {
     e.stopPropagation()
-    setDialogFields(fields)
+    setActiveIndex(index)
     setShowDialog(true)
   }
 
   const handleAddClick = (e: React.MouseEvent) => {
     e.stopPropagation()
-    setDialogFields(
-      fields.map(f => ({ label: f.label, value: "" }))
-    )
+    setActiveIndex(null)
     setShowDialog(true)
   }
 
-  const fields = [
-    { label: "Name", value: "John Doe" },
-    { label: "Relation", value: "Brother" },
-    { label: "Date of Birth", value: "01/01/1990" },
-    { label: "Phone", value: "123-456-7890" },
-  ]
+  const handleSave = (updatedFields: any[]) => {
+    if (activeIndex !== null) {
+      const updatedMembers = [...familyMembers]
+      updatedMembers[activeIndex] = updatedFields
+      setFamilyMembers(updatedMembers)
+    } else {
+      setFamilyMembers((prev) => [...prev, updatedFields])
+    }
+
+    setShowDialog(false)
+  }
 
   return (
     <>
@@ -46,30 +59,54 @@ export default function FamilyInfoCard() {
 
         {isOpen && (
           <div
-            className="absolute left-0 right-0 bg-white border-t border-gray-200 px-4 py-3 shadow-md z-10"
+            className="absolute left-0 right-0 bg-white border-t border-gray-200 px-4 shadow-md z-10"
             style={{ top: "100%" }}
           >
-            <div className="flex items-center justify-between text-sm text-gray-700">
-              {fields.map((field) => (
-                <div key={field.label}>
-                  <p className="text-gray-500">{field.label}</p>
-                  <p className="font-semibold text-[#202C4B]">{field.value}</p>
+            <div className="text-sm text-gray-700">
+              {/* Header row */}
+              <div className="flex font-semibold text-gray-500">
+                {familyMembers[0].map((field) => (
+                  <div key={field.label} className="flex-1 py-2 border-b">
+                    {field.label}
+                  </div>
+                ))}
+                <div className="w-6"></div> {/* Space for edit icon */}
+              </div>
+
+              {/* Data rows */}
+              {familyMembers.map((member, index) => (
+                <div
+                  key={index}
+                  className="flex justify-between items-center"
+                >
+                  {member.map((field) => (
+                    <div key={field.label} className="flex-1 py-2">
+                      <p className="font-semibold text-[#202C4B]">{field.value}</p>
+                    </div>
+                  ))}
+
+                  <Edit
+                    className="text-gray-500 cursor-pointer hover:text-[#126195]"
+                    size={18}
+                    onClick={(e) => handleEditClick(index, e)}
+                  />
                 </div>
               ))}
-              <Edit
-                className="text-gray-500 cursor-pointer hover:text-[#126195]"
-                size={18}
-                onClick={handleEditClick}
-              />
             </div>
           </div>
         )}
+
       </Card>
 
       <EditFamilyDialog
         open={showDialog}
         onOpenChange={setShowDialog}
-        fields={dialogFields}
+        fields={
+          activeIndex !== null
+            ? familyMembers[activeIndex]
+            : familyMembers[0].map(f => ({ ...f, value: "" }))
+        }
+        onSave={handleSave}
       />
     </>
   )

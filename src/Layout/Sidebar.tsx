@@ -20,7 +20,7 @@ export default function Sidebar() {
   }
 
   return (
-    <div className="w-64 h-screen bg-white border-r shadow-sm flex flex-col">
+    <div className="w-64 h-screen bg-white border-r shadow-sm flex flex-col overflow-y-auto scrollbar-hide">
       <div className="flex justify-center items-center p-4">
         <img src={logo} alt="Easy Paypack" className="w-48 h-auto" />
       </div>
@@ -31,7 +31,7 @@ export default function Sidebar() {
         onValueChange={setOpenItems}
         className="px-3 text-sm"
       >
-        <AccordionItem value="dashboard" className="mb-3">
+        <AccordionItem value="dashboard">
           <AccordionTrigger
             onClick={() => handleToggle("dashboard")}
             className="flex justify-between items-center py-2 hover:bg-gray-50 rounded-md px-2"
@@ -64,7 +64,10 @@ export default function Sidebar() {
             <SidebarSection
               items={[
                 { label: "Detail Profile", href: "/detail-profile" },
-                { label: "Leave Application", href: "/leave-application" },
+                { label: "My Calender", href: "/my-calendar" },
+                { label: "Notes", href: "/notes" },
+                { label: "Social feed", href: "/social-feed" },
+                { label: "Chat Room", href: "/chat-room" },
               ]}
             />
           </AccordionContent>
@@ -81,6 +84,7 @@ export default function Sidebar() {
             <SidebarSection
               items={[
                 { label: "PMS", href: "/pms" },
+                { label: "Leave Application", href: "/leave-application" },
                 { label: "Work Logs", href: "/work-logs" },
                 { label: "Pay Slip", href: "/pay-slip" },
                 { label: "Attendance", href: "/attendance" },

@@ -13,7 +13,7 @@ export default function SidebarSection({ items }: SidebarSectionProps) {
   const location = useLocation()
 
   return (
-    <div className="ml-4 mt-1 pl-3">
+    <div className="ml-4 pl-3">
       {items.map((item) => {
         const isActive = location.pathname === item.href
 

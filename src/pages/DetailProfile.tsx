@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -15,7 +16,12 @@ interface InfoItem {
     label: string;
     value: string;
     icon?: React.ReactNode;
-    number?: Number;
+}
+
+interface EmergencyContact {
+    name: string;
+    relation: string;
+    number: number;
 }
 
 interface Project {
@@ -41,22 +47,24 @@ interface AssetItem {
 }
 
 export default function DetailProfile() {
-    const basicInfo: InfoItem[] = [
+    const [isEditing, setIsEditing] = useState(false);
+
+    const [basicInfo] = useState<InfoItem[]>([
         { label: "Client ID", value: "CLT-0024", icon: <IdCard size={16} /> },
         { label: "Team", value: "UI/UX Design", icon: <Users size={16} /> },
         { label: "Date Of Join", value: "1st Jan 2023", icon: <CalendarDays size={16} /> },
         { label: "Report Office", value: "Douglas Martini", icon: <Building size={16} /> },
-    ];
+    ]);
 
-    const contactInfo: InfoItem[] = [
+    const [contactInfo, setContactInfo] = useState<InfoItem[]>([
         { label: "Phone", value: "(163) 2459 315", icon: <Phone size={16} /> },
         { label: "Email", value: "perralt12@example.com", icon: <Mail size={16} /> },
         { label: "Gender", value: "Male", icon: <User size={16} /> },
         { label: "Birthday", value: "24th July 2000", icon: <Calendar size={16} /> },
         { label: "Address", value: "1861 Bayonne Ave, Manchester, NJ, 08759", icon: <MapPin size={16} /> },
-    ];
+    ]);
 
-    const personalInfo: InfoItem[] = [
+    const [personalInfo, setPersonalInfo] = useState<InfoItem[]>([
         { label: "Passport No", value: "QRET4566FGRT", icon: <BadgeCheck size={16} /> },
         { label: "Passport Exp Date", value: "15 May 2029", icon: <CalendarDays size={16} /> },
         { label: "Nationality", value: "Indian", icon: <Flag size={16} /> },
@@ -64,12 +72,12 @@ export default function DetailProfile() {
         { label: "Marital Status", value: "Single", icon: <Users size={16} /> },
         { label: "Employment of Spouse", value: "No", icon: <Briefcase size={16} /> },
         { label: "No. of Children", value: "0", icon: <Baby size={16} /> },
-    ];
+    ]);
 
-    const emergencyContacts = [
+    const [emergencyContacts, setEmergencyContacts] = useState<EmergencyContact[]>([
         { name: "Rakesh Bhai", relation: "Father", number: 9878787866 },
         { name: "Meena Ben", relation: "Mother", number: 9876543210 },
-    ];
+    ]);
 
     const projects: Project[] = [
         {
@@ -117,14 +125,34 @@ export default function DetailProfile() {
         },
     ]
 
+    const handleInfoChange = (
+        index: number,
+        value: string,
+        setter: React.Dispatch<React.SetStateAction<InfoItem[]>>
+    ) => {
+        setter((prev) => {
+            const newData = [...prev];
+            newData[index].value = value;
+            return newData;
+        });
+    };
+
+    const handleEmergencyChange = (
+        index: number,
+        field: "name" | "relation" | "number",
+        value: string
+    ) => {
+        const newContacts = [...emergencyContacts];
+        if (field === "number") newContacts[index][field] = Number(value);
+        else newContacts[index][field] = value;
+        setEmergencyContacts(newContacts);
+    };
+
     return (
         <div className="px-1">
             {/* Header */}
-            <div className="flex items-center justify-between py-6">
+            <div className="py-6">
                 <h1 className="text-2xl font-bold text-[#202C4B]">Detail Profile</h1>
-                <Button variant="outline" className="text-[#202C4B] text-sm border-[#E5E7EB] px-6 py-2 hover:bg-[#F5F7FA]">
-                    Upload Document
-                </Button>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
@@ -140,12 +168,8 @@ export default function DetailProfile() {
                         <div className="pt-27">
                             <CardTitle className="text-md font-semibold text-[#202C4B]">Stephan Peralt</CardTitle>
                             <div className="flex items-center gap-2 justify-center text-xs mt-1">
-                                <span className="bg-[#2125291A] px-3 py-1 rounded-sm font-semibold">
-                                    Software Developer
-                                </span>
-                                <span className="bg-[#3B70801A] text-[#3B7080] px-3 py-1 rounded-sm">
-                                    10+ years of Experience
-                                </span>
+                                <span className="bg-[#2125291A] px-3 py-1 rounded-sm font-semibold">Software Developer</span>
+                                <span className="bg-[#3B70801A] text-[#3B7080] px-3 py-1 rounded-sm">10+ years of Experience</span>
                             </div>
                         </div>
                     </CardHeader>
@@ -161,50 +185,88 @@ export default function DetailProfile() {
                             </div>
                         ))}
 
-                        <div className="flex gap-2 mt-4">
-                            <Button className="w-1/2 bg-[#252A30] hover:bg-[#1B2440] text-white text-sm px-4 py-2 rounded-sm">
-                                Edit Info
-                            </Button>
-                            <Button className="w-1/2 bg-[#126195] hover:bg-[#0F4A75] text-white text-sm px-4 py-2 rounded-sm">
-                                Message
+                        <div className="mt-4">
+                            <Button
+                                className="w-full bg-[#252A30] hover:bg-[#1B2440] text-white text-sm px-4 py-2 rounded-sm"
+                                onClick={() => setIsEditing(!isEditing)}
+                            >
+                                {isEditing ? "Save Info" : "Edit Info"}
                             </Button>
                         </div>
 
+                        {/* Contact Info */}
                         <div className="mt-4 space-y-2 border-t pt-4">
                             <h3 className="font-bold mb-4">Basic Information</h3>
-                            {contactInfo.map((item) => (
+                            {contactInfo.map((item, index) => (
                                 <div key={item.label} className="flex items-center justify-between">
-                                    <div className="flex items-center gap-2 text-[#6B7280]">
-                                        {item.icon}
-                                        <span className="font-semibold text-[#6B7280]">{item.label}</span>
-                                    </div>
-                                    <span className="font-semibold break-words text-right">{item.value}</span>
+                                    <div className="flex items-center gap-2 text-[#6B7280]">{item.icon}<span className="font-semibold text-[#6B7280]">{item.label}</span></div>
+                                    {isEditing ? (
+                                        <input
+                                            className="border px-2 py-1 rounded-sm w-1/2 text-right"
+                                            value={item.value}
+                                            onChange={(e) => handleInfoChange(index, e.target.value, setContactInfo)}
+                                        />
+                                    ) : (
+                                        <span className="font-semibold break-words text-right">{item.value}</span>
+                                    )}
                                 </div>
                             ))}
                         </div>
 
+                        {/* Personal Info */}
                         <div className="mt-4 space-y-2 border-t pt-4">
                             <h3 className="font-bold mb-4">Personal Information</h3>
-                            {personalInfo.map((item) => (
+                            {personalInfo.map((item, index) => (
                                 <div key={item.label} className="flex items-center justify-between">
-                                    <div className="flex items-center gap-2 text-[#6B7280]">
-                                        {item.icon}
-                                        <span className="font-semibold text-[#6B7280]">{item.label}</span>
-                                    </div>
-                                    <span className="font-semibold">{item.value}</span>
+                                    <div className="flex items-center gap-2 text-[#6B7280]">{item.icon}<span className="font-semibold text-[#6B7280]">{item.label}</span></div>
+                                    {isEditing ? (
+                                        <input
+                                            className="border px-2 py-1 rounded-sm w-1/2 text-right"
+                                            value={item.value}
+                                            onChange={(e) => handleInfoChange(index, e.target.value, setPersonalInfo)}
+                                        />
+                                    ) : (
+                                        <span className="font-semibold">{item.value}</span>
+                                    )}
                                 </div>
                             ))}
                         </div>
 
+                        {/* Emergency Contacts */}
                         <div className="mt-4 space-y-2 border-t pt-4">
                             <h3 className="font-bold mb-4">Emergency Contact Number</h3>
-                            {emergencyContacts.map((item) => (
-                                <div key={item.name} className="flex items-center justify-between">
-                                    <div className="flex items-center gap-8 text-[#6B7280]">
-                                        <span className="font-semibold text-[#6B7280]">{item.name}</span>
-                                        <span>- {item.relation}</span>
+                            {emergencyContacts.map((item, index) => (
+                                <div key={index} className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        {isEditing ? (
+                                            <>
+                                                <input
+                                                    className="border px-2 py-1 rounded-sm w-28"
+                                                    value={item.name}
+                                                    onChange={(e) => handleEmergencyChange(index, "name", e.target.value)}
+                                                />
+                                                <input
+                                                    className="border px-2 py-1 rounded-sm w-28"
+                                                    value={item.relation}
+                                                    onChange={(e) => handleEmergencyChange(index, "relation", e.target.value)}
+                                                />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span className="font-semibold text-[#6B7280]">{item.name}</span>
+                                                <span>- {item.relation}</span>
+                                            </>
+                                        )}
                                     </div>
-                                    <span className="font-semibold">{item.number}</span>
+                                    {isEditing ? (
+                                        <input
+                                            className="border px-2 py-1 rounded-sm w-32 text-right"
+                                            value={item.number}
+                                            onChange={(e) => handleEmergencyChange(index, "number", e.target.value)}
+                                        />
+                                    ) : (
+                                        <span className="font-semibold">{item.number}</span>
+                                    )}
                                 </div>
                             ))}
                         </div>
