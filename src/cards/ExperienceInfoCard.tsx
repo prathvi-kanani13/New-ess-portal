@@ -1,46 +1,46 @@
 import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Edit, Plus } from "lucide-react"
-import EditEducationDialog from "../Dialogs/EditEducationDialog"
+import EditExperienceDialog from "../Dialogs/EditExperienceInfoDialog"
 
-export interface EducationItem {
+export interface ExperienceItem {
     id: number
     color: string
-    institution: string
-    course: string
+    companyName: string
+    position: string
     years: string
 }
 
-export default function EducationInfoCard() {
+export default function ExperienceInfoCard() {
     const [isOpen, setIsOpen] = useState(false)
-    const [selectedItem, setSelectedItem] = useState<EducationItem | null>(null)
+    const [selectedItem, setSelectedItem] = useState<ExperienceItem | null>(null)
     const toggleDropdown = () => setIsOpen((prev) => !prev)
 
-    const educationData: EducationItem[] = [
+    const experienceData: ExperienceItem[] = [
         {
             id: 1,
             color: "#22C55E",
-            institution: "Oxford University",
-            course: "Computer Science",
-            years: "2020 - 2022",
+            companyName: "Google",
+            position: "Software Engineer",
+            years: "jan-2030 - present",
         },
         {
             id: 2,
             color: "#F97316",
-            institution: "Cambridge University",
-            course: "Computer Network & Systems",
-            years: "2016 - 2019",
+            companyName: "Microsoft",
+            position: "UI/UX Designer",
+            years: "jan-2026 - dec-2029",
         },
         {
             id: 3,
             color: "#FB923C",
-            institution: "Oxford School",
-            course: "Grade X",
-            years: "2012 - 2016",
+            companyName: "Facebook",
+            position: "Intern",
+            years: "jan-2022 - dec-2025",
         },
     ]
 
-    const openEdit = (e: React.MouseEvent, item: EducationItem) => {
+    const openEdit = (e: React.MouseEvent, item: ExperienceItem) => {
         e.stopPropagation()
         setSelectedItem(item)
     }
@@ -50,8 +50,8 @@ export default function EducationInfoCard() {
         setSelectedItem({
             id: Date.now(),
             color: "",
-            institution: "",
-            course: "",
+            companyName: "",
+            position: "",
             years: "",
         })
     }
@@ -60,7 +60,7 @@ export default function EducationInfoCard() {
         <>
             <Card className="relative rounded-sm cursor-pointer" onClick={toggleDropdown}>
                 <div className="flex justify-between items-center px-4 py-4">
-                    <h4 className="font-bold text-lg text-[#202C4B]">Education Details</h4>
+                    <h4 className="font-bold text-lg text-[#202C4B]">Experience Details</h4>
 
                     <Plus
                         size={20}
@@ -75,28 +75,28 @@ export default function EducationInfoCard() {
                         style={{ top: "100%" }}
                     >
                         <div className="space-y-4 text-sm text-gray-700">
-                            {educationData.map((edu) => (
-                                <div key={edu.id} className="flex justify-between items-start">
+                            {experienceData.map((exp) => (
+                                <div key={exp.id} className="flex justify-between items-start">
 
                                     <div className="flex items-start gap-2">
                                         <span
                                             className="w-2 h-2 mt-2 rounded-full"
-                                            style={{ backgroundColor: edu.color }}
+                                            style={{ backgroundColor: exp.color }}
                                         ></span>
 
                                         <div>
-                                            <p className="text-[14px] text-gray-500">{edu.institution}</p>
-                                            <p className="font-semibold text-[#202C4B]">{edu.course}</p>
+                                            <p className="text-[14px] text-gray-500">{exp.companyName}</p>
+                                            <p className="font-semibold text-[#202C4B]">{exp.position}</p>
                                         </div>
                                     </div>
 
                                     <div className="flex items-center gap-3">
-                                        <p className="text-gray-500 text-sm whitespace-nowrap">{edu.years}</p>
+                                        <p className="text-gray-500 text-sm whitespace-nowrap">{exp.years}</p>
 
                                         <Edit
                                             size={18}
                                             className="text-gray-500 cursor-pointer hover:text-[#126195]"
-                                            onClick={(e) => openEdit(e, edu)}
+                                            onClick={(e) => openEdit(e, exp)}
                                         />
                                     </div>
                                 </div>
@@ -106,13 +106,13 @@ export default function EducationInfoCard() {
                 )}
             </Card>
 
-            <EditEducationDialog
+            <EditExperienceDialog
                 open={!!selectedItem}
                 onOpenChange={(open) => !open && setSelectedItem(null)}
                 fields={selectedItem
                     ? [
-                        { name: "institution", label: "Institution", value: selectedItem.institution },
-                        { name: "course", label: "Course", value: selectedItem.course },
+                        { name: "companyName", label: "Company Name", value: selectedItem.companyName },
+                        { name: "position", label: "Position", value: selectedItem.position },
                         { name: "years", label: "Years", value: selectedItem.years },
                     ]
                     : []

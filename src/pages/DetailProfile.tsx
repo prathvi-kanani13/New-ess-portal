@@ -7,6 +7,9 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import BankInfoCard from "../cards/BankInfoCard";
 import FamilyInfoCard from "../cards/FamilyInfoCard";
 import EducationInfoCard from "../cards/EducationInfoCard";
+import ExperienceInfoCard from "../cards/ExperienceInfoCard";
+import AddSkillsCard from "../cards/AddSkillsCard";
+import KycCard from "../cards/KycCard";
 
 interface InfoItem {
     label: string;
@@ -230,26 +233,11 @@ export default function DetailProfile() {
 
                     <EducationInfoCard />
 
-                    <Card className="relative rounded-sm">
-                        <div>
-                            <h4 className="font-bold text-lg text-[#202C4B] px-4 py-4">Experience Details</h4>
-                            <Edit className="absolute top-4 right-4 text-[#6B7280] cursor-pointer" size={20} />
-                        </div>
-                    </Card>
+                    <ExperienceInfoCard />
 
-                    <Card className="relative rounded-sm">
-                        <div>
-                            <h4 className="font-bold text-lg text-[#202C4B] px-4 py-4">Add Skills</h4>
-                            <Edit className="absolute top-4 right-4 text-[#6B7280] cursor-pointer" size={20} />
-                        </div>
-                    </Card>
+                    <AddSkillsCard />
 
-                    <Card className="relative rounded-sm">
-                        <div>
-                            <h4 className="font-bold text-lg text-[#202C4B] px-4 py-4">KYC</h4>
-                            <Edit className="absolute top-4 right-4 text-[#6B7280] cursor-pointer" size={20} />
-                        </div>
-                    </Card>
+                    <KycCard />
 
                     {/* Projects / Assets Tabs */}
                     <Card className="rounded-sm">

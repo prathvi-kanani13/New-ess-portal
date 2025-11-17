@@ -1,46 +1,42 @@
 import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Edit, Plus } from "lucide-react"
-import EditEducationDialog from "../Dialogs/EditEducationDialog"
+import EditAddSkillsDialog from "../Dialogs/EditAddSkillsDialog"
 
-export interface EducationItem {
+export interface skillsItem {
     id: number
-    color: string
-    institution: string
-    course: string
+    skillName: string
+    tool: string
     years: string
 }
 
-export default function EducationInfoCard() {
+export default function AddSkillsCard() {
     const [isOpen, setIsOpen] = useState(false)
-    const [selectedItem, setSelectedItem] = useState<EducationItem | null>(null)
+    const [selectedItem, setSelectedItem] = useState<skillsItem | null>(null)
     const toggleDropdown = () => setIsOpen((prev) => !prev)
-
-    const educationData: EducationItem[] = [
+    
+    const skillsData: skillsItem[] = [
         {
             id: 1,
-            color: "#22C55E",
-            institution: "Oxford University",
-            course: "Computer Science",
+            skillName: "JavaScript",
+            tool: "W3 Schools",
             years: "2020 - 2022",
         },
         {
             id: 2,
-            color: "#F97316",
-            institution: "Cambridge University",
-            course: "Computer Network & Systems",
-            years: "2016 - 2019",
+            skillName: "HTML",
+            tool: "W3 Schools",
+            years: "2026 - 2029",
         },
         {
             id: 3,
-            color: "#FB923C",
-            institution: "Oxford School",
-            course: "Grade X",
-            years: "2012 - 2016",
+            skillName: "CSS",
+            tool: "W3 Schools",
+            years: "2022 - 2025",
         },
     ]
 
-    const openEdit = (e: React.MouseEvent, item: EducationItem) => {
+    const openEdit = (e: React.MouseEvent, item: skillsItem) => {
         e.stopPropagation()
         setSelectedItem(item)
     }
@@ -49,9 +45,8 @@ export default function EducationInfoCard() {
         e.stopPropagation()
         setSelectedItem({
             id: Date.now(),
-            color: "",
-            institution: "",
-            course: "",
+            skillName: "",
+            tool: "",
             years: "",
         })
     }
@@ -60,7 +55,7 @@ export default function EducationInfoCard() {
         <>
             <Card className="relative rounded-sm cursor-pointer" onClick={toggleDropdown}>
                 <div className="flex justify-between items-center px-4 py-4">
-                    <h4 className="font-bold text-lg text-[#202C4B]">Education Details</h4>
+                    <h4 className="font-bold text-lg text-[#202C4B]">Add Skills</h4>
 
                     <Plus
                         size={20}
@@ -75,28 +70,24 @@ export default function EducationInfoCard() {
                         style={{ top: "100%" }}
                     >
                         <div className="space-y-4 text-sm text-gray-700">
-                            {educationData.map((edu) => (
-                                <div key={edu.id} className="flex justify-between items-start">
+                            {skillsData.map((skill) => (
+                                <div key={skill.id} className="flex justify-between items-start">
 
                                     <div className="flex items-start gap-2">
-                                        <span
-                                            className="w-2 h-2 mt-2 rounded-full"
-                                            style={{ backgroundColor: edu.color }}
-                                        ></span>
 
                                         <div>
-                                            <p className="text-[14px] text-gray-500">{edu.institution}</p>
-                                            <p className="font-semibold text-[#202C4B]">{edu.course}</p>
+                                            <p className="text-[14px] text-gray-500">{skill.skillName}</p>
+                                            <p className="font-semibold text-[#202C4B]">{skill.tool}</p>
                                         </div>
                                     </div>
 
                                     <div className="flex items-center gap-3">
-                                        <p className="text-gray-500 text-sm whitespace-nowrap">{edu.years}</p>
+                                        <p className="text-gray-500 text-sm whitespace-nowrap">{skill.years}</p>
 
                                         <Edit
                                             size={18}
                                             className="text-gray-500 cursor-pointer hover:text-[#126195]"
-                                            onClick={(e) => openEdit(e, edu)}
+                                            onClick={(e) => openEdit(e, skill)}
                                         />
                                     </div>
                                 </div>
@@ -106,13 +97,13 @@ export default function EducationInfoCard() {
                 )}
             </Card>
 
-            <EditEducationDialog
+            <EditAddSkillsDialog
                 open={!!selectedItem}
                 onOpenChange={(open) => !open && setSelectedItem(null)}
                 fields={selectedItem
                     ? [
-                        { name: "institution", label: "Institution", value: selectedItem.institution },
-                        { name: "course", label: "Course", value: selectedItem.course },
+                        { name: "skillName", label: "Skill Name", value: selectedItem.skillName },
+                        { name: "tool", label: "Tool", value: selectedItem.tool },
                         { name: "years", label: "Years", value: selectedItem.years },
                     ]
                     : []

@@ -19,7 +19,7 @@ export default function EditFamilyDialog({ open, onOpenChange, fields, }: EditFa
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-[500px]">
                 <DialogHeader>
-                    <DialogTitle>Edit Family Information</DialogTitle>
+                    <DialogTitle>Family Information</DialogTitle>
                 </DialogHeader>
 
                 <form className="space-y-4 mt-3">

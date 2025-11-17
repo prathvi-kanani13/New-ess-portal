@@ -4,35 +4,37 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 interface Field {
+    name: string
     label: string
     value: string
 }
 
-interface EditBankDialogProps {
+interface EditKycDialogProps {
     open: boolean
     onOpenChange: (open: boolean) => void
     fields: Field[]
 }
 
-export default function EditBankDialog({ open, onOpenChange, fields, }: EditBankDialogProps) {
+export default function EditKycDialog({
+    open,
+    onOpenChange,
+    fields,
+}: EditKycDialogProps) {
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-[500px]">
                 <DialogHeader>
-                    <DialogTitle>Bank Information</DialogTitle>
+                    <DialogTitle>KYC</DialogTitle>
                 </DialogHeader>
 
                 <form className="space-y-4 mt-3">
                     {fields.map((field) => (
-                        <div key={field.label} className="space-y-1">
+                        <div key={field.name} className="space-y-1">
                             <Label className="text-sm font-medium text-gray-700">
                                 {field.label}
                             </Label>
-                            <Input
-                                type="text"
-                                defaultValue={field.value}
-                                className="w-full"
-                            />
+
+                            <Input type="text" defaultValue={field.value} />
                         </div>
                     ))}
 

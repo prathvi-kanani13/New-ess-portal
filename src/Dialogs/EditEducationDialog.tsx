@@ -24,7 +24,7 @@ export default function EditEducationDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>Edit Education</DialogTitle>
+          <DialogTitle>Education Details</DialogTitle>
         </DialogHeader>
 
         <form className="space-y-4 mt-3">
