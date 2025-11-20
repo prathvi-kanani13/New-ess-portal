@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Edit, Phone, Mail, User, Calendar, MapPin, IdCard, Users, CalendarDays, Building, BadgeCheck, Flag, Heart, Briefcase, Baby, MoreVertical } from "lucide-react";
+import { Phone, Mail, User, Calendar, MapPin, IdCard, Users, CalendarDays, Building, CreditCard, FileText, Key, Flag, Heart, MoreVertical } from "lucide-react";
 import Image from "../assets/avtar.jpg";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import BankInfoCard from "../cards/BankInfoCard";
@@ -65,13 +65,12 @@ export default function DetailProfile() {
     ]);
 
     const [personalInfo, setPersonalInfo] = useState<InfoItem[]>([
-        { label: "Passport No", value: "QRET4566FGRT", icon: <BadgeCheck size={16} /> },
-        { label: "Passport Exp Date", value: "15 May 2029", icon: <CalendarDays size={16} /> },
+        { label: "AadharCard No.", value: "QRET4566FGRT", icon: <CreditCard size={16} /> },
+        { label: "PanCard No.", value: "15 May 2029", icon: <FileText size={16} /> },
         { label: "Nationality", value: "Indian", icon: <Flag size={16} /> },
         { label: "Religion", value: "Hindu", icon: <Heart size={16} /> },
         { label: "Marital Status", value: "Single", icon: <Users size={16} /> },
-        { label: "Employment of Spouse", value: "No", icon: <Briefcase size={16} /> },
-        { label: "No. of Children", value: "0", icon: <Baby size={16} /> },
+        { label: "UAN Number", value: "No", icon: <Key size={16} /> },
     ]);
 
     const [emergencyContacts, setEmergencyContacts] = useState<EmergencyContact[]>([
@@ -158,7 +157,7 @@ export default function DetailProfile() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
                 {/* Left card */}
                 <Card className="lg:col-span-1 pb-6 rounded-sm mb-6">
-                    <CardHeader className="relative text-center h-35">
+                    <CardHeader className="relative text-center h-34">
                         <div className="bg-black h-20 w-full absolute top-0 left-0 rounded-t-sm"></div>
                         <img
                             src={Image}
@@ -185,12 +184,12 @@ export default function DetailProfile() {
                             </div>
                         ))}
 
-                        <div className="mt-4">
+                        <div className="mt-5">
                             <Button
                                 className="w-full bg-[#252A30] hover:bg-[#1B2440] text-white text-sm px-4 py-2 rounded-sm"
                                 onClick={() => setIsEditing(!isEditing)}
                             >
-                                {isEditing ? "Save Info" : "Edit Info"}
+                                Edit Info
                             </Button>
                         </div>
 
@@ -270,6 +269,16 @@ export default function DetailProfile() {
                                 </div>
                             ))}
                         </div>
+
+                        <div className="flex gap-3 mt-6 pt-4 border-t">
+                            <Button className="w-1/2 bg-[#252A30] hover:bg-[#1B2440] text-white text-sm py-2 rounded-sm">
+                                Save Info
+                            </Button>
+
+                            <Button className="w-1/2 bg-[#252A30] hover:bg-[#1B2440] text-white text-sm py-2 rounded-sm">
+                                View Info Status
+                            </Button>
+                        </div>
                     </CardContent>
                 </Card>
 
@@ -284,7 +293,6 @@ export default function DetailProfile() {
                                 of experience and 350+ projects completed worldwide with satisfied customers, I developed the 360° brand approach,
                                 which helped me to create numerous brands that are relevant, meaningful, and loved.
                             </p>
-                            <Edit className="absolute top-4 right-4 text-[#6B7280]" size={20} />
                         </div>
                     </Card>
 

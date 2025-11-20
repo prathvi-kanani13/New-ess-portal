@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-// import ProtectRoute from "./context/ProtectRoute";
+import ProtectRoute from "./context/ProtectRoute";
 import OtpProtect from "./context/OtpProtect";
 import Dashboard from "./pages/Dashboard";
 import Layout from "./Layout/Layout";
@@ -26,9 +26,9 @@ function App() {
         <Route
           path="/"
           element={
-            // <ProtectRoute>
-            <Layout />
-            // </ProtectRoute>
+            <ProtectRoute>
+              <Layout />
+            </ProtectRoute>
           }
         >
           <Route path="/employee-dashboard" element={<Dashboard />} />

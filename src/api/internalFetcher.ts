@@ -7,10 +7,31 @@ const api = axios.create({
   },
 });
 
+// api.interceptors.request.use((config) => {
+//   const token = localStorage.getItem("token");
+//   if (token && config.headers) config.headers.Authorization = `Bearer ${token}`;
+//   return config;
+// });
+
 api.interceptors.request.use((config) => {
+  const url = config.url || "";
+
+  // Do NOT attach token for Login and OTP APIs
+  if (
+    url.includes("/loginByToken") ||
+    url.includes("/verifyOTP")
+  ) {
+    return config;
+  }
+
+  // Attach token for all other APIs
   const token = localStorage.getItem("token");
-  if (token && config.headers) config.headers.Authorization = `Bearer ${token}`;
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
   return config;
 });
+
 
 export default api;

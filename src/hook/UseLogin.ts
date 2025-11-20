@@ -10,3 +10,6 @@ export const useLogin = () =>
   });
 
 export default useLogin;
+
+// useQuery = fetch data
+// useMutation = send data / change data

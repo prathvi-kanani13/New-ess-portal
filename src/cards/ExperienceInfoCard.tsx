@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Edit, Plus } from "lucide-react"
-import EditExperienceDialog from "../Dialogs/EditExperienceInfoDialog"
+import EditExperienceDialog from "../Dialogs/EditExperienceDialog"
 
 export interface ExperienceItem {
     id: number
@@ -9,51 +9,53 @@ export interface ExperienceItem {
     companyName: string
     position: string
     years: string
+    file?: File
 }
 
 export default function ExperienceInfoCard() {
     const [isOpen, setIsOpen] = useState(false)
-    const [selectedItem, setSelectedItem] = useState<ExperienceItem | null>(null)
-    const toggleDropdown = () => setIsOpen((prev) => !prev)
+    const [showDialog, setShowDialog] = useState(false)
+    const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
-    const experienceData: ExperienceItem[] = [
-        {
-            id: 1,
-            color: "#22C55E",
-            companyName: "Google",
-            position: "Software Engineer",
-            years: "jan-2030 - present",
-        },
-        {
-            id: 2,
-            color: "#F97316",
-            companyName: "Microsoft",
-            position: "UI/UX Designer",
-            years: "jan-2026 - dec-2029",
-        },
-        {
-            id: 3,
-            color: "#FB923C",
-            companyName: "Facebook",
-            position: "Intern",
-            years: "jan-2022 - dec-2025",
-        },
-    ]
+    const [experienceData, setExperienceData] = useState<ExperienceItem[]>([
+        { id: 1, color: "#22C55E", companyName: "Google", position: "Software Engineer", years: "2030 - Present" },
+        { id: 2, color: "#F97316", companyName: "Microsoft", position: "UI/UX Designer", years: "2026 - 2029" },
+        { id: 3, color: "#FB923C", companyName: "Facebook", position: "Intern", years: "2022 - 2025" },
+    ])
 
-    const openEdit = (e: React.MouseEvent, item: ExperienceItem) => {
+    const toggleDropdown = () => setIsOpen(prev => !prev)
+
+    const handleEditClick = (index: number, e: React.MouseEvent) => {
         e.stopPropagation()
-        setSelectedItem(item)
+        setActiveIndex(index)
+        setShowDialog(true)
     }
 
-    const openAdd = (e: React.MouseEvent) => {
+    const handleAddClick = (e: React.MouseEvent) => {
         e.stopPropagation()
-        setSelectedItem({
-            id: Date.now(),
-            color: "",
-            companyName: "",
-            position: "",
-            years: "",
-        })
+        setActiveIndex(null)
+        setShowDialog(true)
+    }
+
+    const handleSave = (updatedFields: any[], file?: File) => {
+        const updatedItem: ExperienceItem = {
+            id: activeIndex !== null ? experienceData[activeIndex].id : Date.now(),
+            color: "#22C55E",
+            companyName: updatedFields.find(f => f.name === "companyName")?.value || "",
+            position: updatedFields.find(f => f.name === "position")?.value || "",
+            years: updatedFields.find(f => f.name === "years")?.value || "",
+            file,
+        }
+
+        if (activeIndex !== null) {
+            const updated = [...experienceData]
+            updated[activeIndex] = updatedItem
+            setExperienceData(updated)
+        } else {
+            setExperienceData(prev => [...prev, updatedItem])
+        }
+
+        setShowDialog(false)
     }
 
     return (
@@ -65,7 +67,7 @@ export default function ExperienceInfoCard() {
                     <Plus
                         size={20}
                         className="text-[#6B7280] hover:text-[#126195] cursor-pointer"
-                        onClick={openAdd}
+                        onClick={handleAddClick}
                     />
                 </div>
 
@@ -75,9 +77,8 @@ export default function ExperienceInfoCard() {
                         style={{ top: "100%" }}
                     >
                         <div className="space-y-4 text-sm text-gray-700">
-                            {experienceData.map((exp) => (
+                            {experienceData.map((exp, index) => (
                                 <div key={exp.id} className="flex justify-between items-start">
-
                                     <div className="flex items-start gap-2">
                                         <span
                                             className="w-2 h-2 mt-2 rounded-full"
@@ -96,7 +97,7 @@ export default function ExperienceInfoCard() {
                                         <Edit
                                             size={18}
                                             className="text-gray-500 cursor-pointer hover:text-[#126195]"
-                                            onClick={(e) => openEdit(e, exp)}
+                                            onClick={(e) => handleEditClick(index, e)}
                                         />
                                     </div>
                                 </div>
@@ -107,16 +108,22 @@ export default function ExperienceInfoCard() {
             </Card>
 
             <EditExperienceDialog
-                open={!!selectedItem}
-                onOpenChange={(open) => !open && setSelectedItem(null)}
-                fields={selectedItem
-                    ? [
-                        { name: "companyName", label: "Company Name", value: selectedItem.companyName },
-                        { name: "position", label: "Position", value: selectedItem.position },
-                        { name: "years", label: "Years", value: selectedItem.years },
-                    ]
-                    : []
+                open={showDialog}
+                onOpenChange={setShowDialog}
+                fields={
+                    activeIndex !== null
+                        ? [
+                            { name: "companyName", label: "Previous Company Name", value: experienceData[activeIndex].companyName },
+                            { name: "position", label: "Position", value: experienceData[activeIndex].position },
+                            { name: "years", label: "Years", value: experienceData[activeIndex].years },
+                        ]
+                        : [
+                            { name: "companyName", label: "Previous Company Name", value: "" },
+                            { name: "position", label: "Position", value: "" },
+                            { name: "years", label: "Years", value: "" },
+                        ]
                 }
+                onSave={handleSave}
             />
         </>
     )

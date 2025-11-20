@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card"
 import { Edit, Plus } from "lucide-react"
 import EditAddSkillsDialog from "../Dialogs/EditAddSkillsDialog"
 
-export interface skillsItem {
+export interface SkillsItem {
     id: number
     skillName: string
     tool: string
@@ -12,43 +12,51 @@ export interface skillsItem {
 
 export default function AddSkillsCard() {
     const [isOpen, setIsOpen] = useState(false)
-    const [selectedItem, setSelectedItem] = useState<skillsItem | null>(null)
-    const toggleDropdown = () => setIsOpen((prev) => !prev)
-    
-    const skillsData: skillsItem[] = [
-        {
-            id: 1,
-            skillName: "JavaScript",
-            tool: "W3 Schools",
-            years: "2020 - 2022",
-        },
-        {
-            id: 2,
-            skillName: "HTML",
-            tool: "W3 Schools",
-            years: "2026 - 2029",
-        },
-        {
-            id: 3,
-            skillName: "CSS",
-            tool: "W3 Schools",
-            years: "2022 - 2025",
-        },
-    ]
+    const [showDialog, setShowDialog] = useState(false)
+    const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
-    const openEdit = (e: React.MouseEvent, item: skillsItem) => {
+    const [skillsData, setSkillsData] = useState<SkillsItem[]>([
+        { id: 1, skillName: "JavaScript", tool: "W3 Schools", years: "2020 - 2022" },
+        { id: 2, skillName: "HTML", tool: "W3 Schools", years: "2026 - 2029" },
+        { id: 3, skillName: "CSS", tool: "W3 Schools", years: "2022 - 2025" },
+    ])
+
+    const toggleDropdown = () => setIsOpen(!isOpen)
+
+    // ----------- EDIT CLICK -----------
+    const handleEditClick = (index: number, e: React.MouseEvent) => {
         e.stopPropagation()
-        setSelectedItem(item)
+        setActiveIndex(index)
+        setShowDialog(true)
     }
 
-    const openAdd = (e: React.MouseEvent) => {
+    // ----------- ADD NEW -----------
+    const handleAddClick = (e: React.MouseEvent) => {
         e.stopPropagation()
-        setSelectedItem({
-            id: Date.now(),
-            skillName: "",
-            tool: "",
-            years: "",
-        })
+        setActiveIndex(null)
+        setShowDialog(true)
+    }
+
+    // ----------- SAVE DATA -----------
+    const handleSave = (updatedFields: any[]) => {
+        const updatedItem: SkillsItem = {
+            id: activeIndex !== null ? skillsData[activeIndex].id : Date.now(),
+            skillName: updatedFields.find(f => f.name === "skillName")?.value || "",
+            tool: updatedFields.find(f => f.name === "tool")?.value || "",
+            years: updatedFields.find(f => f.name === "years")?.value || "",
+        }
+
+        if (activeIndex !== null) {
+            // update existing
+            const updated = [...skillsData]
+            updated[activeIndex] = updatedItem
+            setSkillsData(updated)
+        } else {
+            // add new
+            setSkillsData(prev => [...prev, updatedItem])
+        }
+
+        setShowDialog(false)
     }
 
     return (
@@ -60,21 +68,16 @@ export default function AddSkillsCard() {
                     <Plus
                         size={20}
                         className="text-[#6B7280] hover:text-[#126195] cursor-pointer"
-                        onClick={openAdd}
+                        onClick={handleAddClick}
                     />
                 </div>
 
                 {isOpen && (
-                    <div
-                        className="absolute left-0 right-0 bg-white border-t border-gray-200 px-5 py-3 shadow-md z-10"
-                        style={{ top: "100%" }}
-                    >
+                    <div className="absolute left-0 right-0 bg-white border-t border-gray-200 px-5 py-3 shadow-md z-10" style={{ top: "100%" }}>
                         <div className="space-y-4 text-sm text-gray-700">
-                            {skillsData.map((skill) => (
+                            {skillsData.map((skill, index) => (
                                 <div key={skill.id} className="flex justify-between items-start">
-
                                     <div className="flex items-start gap-2">
-
                                         <div>
                                             <p className="text-[14px] text-gray-500">{skill.skillName}</p>
                                             <p className="font-semibold text-[#202C4B]">{skill.tool}</p>
@@ -87,7 +90,7 @@ export default function AddSkillsCard() {
                                         <Edit
                                             size={18}
                                             className="text-gray-500 cursor-pointer hover:text-[#126195]"
-                                            onClick={(e) => openEdit(e, skill)}
+                                            onClick={(e) => handleEditClick(index, e)}
                                         />
                                     </div>
                                 </div>
@@ -98,16 +101,22 @@ export default function AddSkillsCard() {
             </Card>
 
             <EditAddSkillsDialog
-                open={!!selectedItem}
-                onOpenChange={(open) => !open && setSelectedItem(null)}
-                fields={selectedItem
-                    ? [
-                        { name: "skillName", label: "Skill Name", value: selectedItem.skillName },
-                        { name: "tool", label: "Tool", value: selectedItem.tool },
-                        { name: "years", label: "Years", value: selectedItem.years },
-                    ]
-                    : []
+                open={showDialog}
+                onOpenChange={setShowDialog}
+                fields={
+                    activeIndex !== null
+                        ? [
+                            { name: "skillName", label: "Skill Name", value: skillsData[activeIndex].skillName },
+                            { name: "tool", label: "Tool", value: skillsData[activeIndex].tool },
+                            { name: "years", label: "Years", value: skillsData[activeIndex].years },
+                        ]
+                        : [
+                            { name: "skillName", label: "Skill Name", value: "" },
+                            { name: "tool", label: "Tool", value: "" },
+                            { name: "years", label: "Years", value: "" },
+                        ]
                 }
+                onSave={handleSave}
             />
         </>
     )

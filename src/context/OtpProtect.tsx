@@ -5,7 +5,7 @@ const OtpProtect = ({ children }: { children: ReactNode }) => {
     const otpUser = sessionStorage.getItem("otpUser");
     const token = localStorage.getItem("token");
 
-    // If already logged in - no need OTP → go dashboard
+    // If already logged in - no need OTP → go dashboarda
     if (token) return <Navigate to="/employee-dashboard" replace />;
 
     // If no otpUser - user did not start login → go login

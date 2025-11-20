@@ -98,7 +98,6 @@ export default function Dashboard() {
 
             {/* Working Hours Section */}
             <WorkingHoursCard />
-
           </div>
         </div>
       </div>
@@ -110,7 +109,6 @@ export default function Dashboard() {
 
         {/* Tasks */}
         <TasksCard />
-
       </div>
     </div>
   )

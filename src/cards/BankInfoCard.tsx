@@ -94,7 +94,6 @@ export default function BankInfoCard() {
             </div>
           </div>
         )}
-
       </Card>
 
       <EditBankDialog

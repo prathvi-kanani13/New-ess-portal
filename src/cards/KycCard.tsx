@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Edit, Plus } from "lucide-react"
-import EditKycDialog from "../Dialogs/EditKycCard"
+import EditKycDialog from "../Dialogs/EditKycDialog"
 
-export interface kycItem {
+export interface KycItem {
     id: number
     documentName: string
     documentType: string
@@ -12,43 +12,46 @@ export interface kycItem {
 
 export default function KycCard() {
     const [isOpen, setIsOpen] = useState(false)
-    const [selectedItem, setSelectedItem] = useState<kycItem | null>(null)
-    const toggleDropdown = () => setIsOpen((prev) => !prev)
+    const [showDialog, setShowDialog] = useState(false)
+    const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
-    const kycData: kycItem[] = [
-        {
-            id: 1,
-            documentName: "Aadhar Card",
-            documentType: "Government ID",
-            year: "2020 - 2022",
-        },
-        {
-            id: 2,
-            documentName: "PAN Card",
-            documentType: "Government ID",
-            year: "2026 - 2029",
-        },
-        {
-            id: 3,
-            documentName: "Voter ID",
-            documentType: "Government ID",
-            year: "2022 - 2025",
-        },
-    ]
+    const [kycData, setKycData] = useState<KycItem[]>([
+        { id: 1, documentName: "Aadhar Card", documentType: "Government ID", year: "2020 - 2022" },
+        { id: 2, documentName: "PAN Card", documentType: "Government ID", year: "2026 - 2029" },
+        { id: 3, documentName: "Voter ID", documentType: "Government ID", year: "2022 - 2025" },
+    ])
 
-    const openEdit = (e: React.MouseEvent, item: kycItem) => {
+    const toggleDropdown = () => setIsOpen(!isOpen)
+
+    const handleEditClick = (index: number, e: React.MouseEvent) => {
         e.stopPropagation()
-        setSelectedItem(item)
+        setActiveIndex(index)
+        setShowDialog(true)
     }
 
-    const openAdd = (e: React.MouseEvent) => {
+    const handleAddClick = (e: React.MouseEvent) => {
         e.stopPropagation()
-        setSelectedItem({
-            id: Date.now(),
-            documentName: "",
-            documentType: "",
-            year: "",
-        })
+        setActiveIndex(null)
+        setShowDialog(true)
+    }
+
+    const handleSave = (updatedFields: any[]) => {
+        const updatedItem: KycItem = {
+            id: activeIndex !== null ? kycData[activeIndex].id : Date.now(),
+            documentName: updatedFields.find(f => f.name === "documentName")?.value || "",
+            documentType: updatedFields.find(f => f.name === "documentType")?.value || "",
+            year: updatedFields.find(f => f.name === "year")?.value || "",
+        }
+
+        if (activeIndex !== null) {
+            const updated = [...kycData]
+            updated[activeIndex] = updatedItem
+            setKycData(updated)
+        } else {
+            setKycData(prev => [...prev, updatedItem])
+        }
+
+        setShowDialog(false)
     }
 
     return (
@@ -60,7 +63,7 @@ export default function KycCard() {
                     <Plus
                         size={20}
                         className="text-[#6B7280] hover:text-[#126195] cursor-pointer"
-                        onClick={openAdd}
+                        onClick={handleAddClick}
                     />
                 </div>
 
@@ -70,11 +73,10 @@ export default function KycCard() {
                         style={{ top: "100%" }}
                     >
                         <div className="space-y-4 text-sm text-gray-700">
-                            {kycData.map((kyc) => (
+                            {kycData.map((kyc, index) => (
                                 <div key={kyc.id} className="flex justify-between items-start">
 
                                     <div className="flex items-start gap-2">
-
                                         <div>
                                             <p className="text-[14px] text-gray-500">{kyc.documentName}</p>
                                             <p className="font-semibold text-[#202C4B]">{kyc.documentType}</p>
@@ -87,7 +89,7 @@ export default function KycCard() {
                                         <Edit
                                             size={18}
                                             className="text-gray-500 cursor-pointer hover:text-[#126195]"
-                                            onClick={(e) => openEdit(e, kyc)}
+                                            onClick={(e) => handleEditClick(index, e)}
                                         />
                                     </div>
                                 </div>
@@ -98,16 +100,22 @@ export default function KycCard() {
             </Card>
 
             <EditKycDialog
-                open={!!selectedItem}
-                onOpenChange={(open) => !open && setSelectedItem(null)}
-                fields={selectedItem
-                    ? [
-                        { name: "documentName", label: "Document Name", value: selectedItem.documentName },
-                        { name: "documentType", label: "Document Type", value: selectedItem.documentType },
-                        { name: "year", label: "Year", value: selectedItem.year },
-                    ]
-                    : []
+                open={showDialog}
+                onOpenChange={setShowDialog}
+                fields={
+                    activeIndex !== null
+                        ? [
+                            { name: "documentName", label: "Document Name", value: kycData[activeIndex].documentName },
+                            { name: "documentType", label: "Document Type", value: kycData[activeIndex].documentType },
+                            { name: "year", label: "Year", value: kycData[activeIndex].year },
+                        ]
+                        : [
+                            { name: "documentName", label: "Document Name", value: "" },
+                            { name: "documentType", label: "Document Type", value: "" },
+                            { name: "year", label: "Year", value: "" },
+                        ]
                 }
+                onSave={handleSave}
             />
         </>
     )
